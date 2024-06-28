@@ -105,7 +105,7 @@ def scrape_company_details(driver, url):
         # Extract details about the startup
         details_element_container = soup.find("section", class_="relative isolate z-0 border-retro-sectionBorder sm:pr-[13px] ycdcPlus:pr-0 pt-1 sm:pt-2 lg:pt-3 pb-1 sm:pb-2 lg:pb-3")
         details_element = details_element_container.find("p", class_="whitespace-pre-line")
-        details = details_element.text.strip() if details_element else "N/A",
+        details = details_element.text.strip() if details_element else "N/A"
         
         # Extract active founders
         founders = []
@@ -164,12 +164,12 @@ def scrape_company_details(driver, url):
                         if "Company Launches" in title:
                             continue
                         link = link_element['href'] if link_element else "N/A"
-                        description = description_elem.text.strip() if description_elem else "N/A"
+                        launch_description = description_elem.text.strip() if description_elem else "N/A"
 
                         launches.append({
                             "title": title,
                             "link": link,
-                            "description": description
+                            "description": launch_description
                         })
         except Exception as e:
             logger.error(f"Error extracting launches: {e}")
@@ -177,6 +177,8 @@ def scrape_company_details(driver, url):
 
 
         return {
+            "scraped_url": url,
+            "embeddings_field": f"{name} {description} {' '.join(industries)} {location} {details}",
             "name": name,
             "description": description,
             "details": details,
