@@ -4,3 +4,5 @@ motor~=3.3
 pydantic[email]
 selenium==4.22.0
 beautifulsoup4==4.12.3
+chromedriver-py==126.0.6478.126
+bson==0.5.10
