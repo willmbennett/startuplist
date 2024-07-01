@@ -7,4 +7,3 @@ beautifulsoup4==4.12.3
 #chromedriver-py==126.0.6478.126
 pymongo==4.8.0
 openai==1.35.7
-dotenv==0.0.5
