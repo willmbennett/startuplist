@@ -38,3 +38,5 @@ next-env.d.ts
 venv
 __pycache__
 package-lock.json
+api/routers/yc_scraping2.py
+api/utils/scraping2.py
