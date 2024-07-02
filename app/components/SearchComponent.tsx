@@ -2,7 +2,7 @@
 import { Input } from "@/app/components/ui/input";
 import { Search } from "lucide-react";
 import { X } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { motion } from "framer-motion";
 import { fetchEmbeddings } from "@/lib/openai";
 import { Button } from "./ui/button";
@@ -13,9 +13,10 @@ const placeholders = ["Non AI startups from YCS24 batch", "Fintch startups in Ne
 interface SearchComponentProps {
     updateSearchResults: (results: StartupType[]) => void;
     clearSearchResults: () => void;
+    setLoading: Dispatch<SetStateAction<boolean>>
 }
 
-export const SearchComponent = ({ updateSearchResults, clearSearchResults }: SearchComponentProps) => {
+export const SearchComponent = ({ updateSearchResults, clearSearchResults, setLoading }: SearchComponentProps) => {
     const [searchValue, setSearchValue] = useState("");
     const [placeholder, setPlaceholder] = useState(placeholders[0]);
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -48,9 +49,10 @@ export const SearchComponent = ({ updateSearchResults, clearSearchResults }: Sea
     };
 
     const handleSearch = async () => {
-        console.log('Made it to search with query: ', searchValue)
+        setLoading(true)
         const data = await fetchEmbeddings(searchValue)
         updateSearchResults(data.startups)
+        setLoading(false)
     };
 
     const handleClear = () => {

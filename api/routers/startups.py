@@ -29,7 +29,7 @@ async def get_startups(query: str = Query(..., description="The text string to b
             "path": "startups_embedding",
             "queryVector": embeddings,
             "numCandidates": 100,
-            "limit": 30
+            "limit": 10
         }
     }
 
