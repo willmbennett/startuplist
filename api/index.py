@@ -1,12 +1,12 @@
 from fastapi import FastAPI
 import logging
 import uvicorn
-from api.routers import yc_scraping2, startups
+from api.routers import startups
 
 app = FastAPI()
 
 logging.basicConfig(level=logging.INFO)
-app.include_router(yc_scraping2.router)
+#app.include_router(yc_scraping2.router)
 app.include_router(startups.router)
 
 # Run FastAPI in debug mode

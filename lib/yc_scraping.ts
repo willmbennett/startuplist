@@ -1,13 +1,17 @@
 import { StartupType } from "@/app/types";
 
 export const fetchYCUrls = async (url: string) => {
-    const response = await fetch(`/api/yc/fetchurls?url=${encodeURIComponent(url)}`);
-    if (!response.ok) {
-        throw new Error('Network response was not ok');
+    try {
+        const response = await fetch(`/api/yc/fetchurls?url=${encodeURIComponent(url)}`);
+        if (!response.ok) {
+            throw new Error(`Network response was not ok: ${response.statusText}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error(`Failed to fetch URLs from ${url}:`, error);
+        throw error;
     }
-    const data = await response.json();
-    return data;
-}
+};
 
 export const checkIfUrlExists = async (scraped_url: string) => {
     const response = await fetch(`/api/startups/findexisting?scraped_url=${encodeURIComponent(scraped_url)}`);
