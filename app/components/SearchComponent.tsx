@@ -61,7 +61,7 @@ export const SearchComponent = ({ updateSearchResults, clearSearchResults }: Sea
     return (
         <div className="flex flex-col md:flex-row justify-center items-center gap-2 w-full">
             <div className="relative flex-1 md:grow-0 w-full">
-                <Search className="absolute left-3 top-3 h-4 w-4 text-white z-30" />
+                <Search className="absolute left-3 top-3 h-4 w-4 text-white" />
                 <Input
                     type="search"
                     placeholder=""

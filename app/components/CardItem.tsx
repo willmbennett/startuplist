@@ -27,11 +27,11 @@ export function CardItem({ startup }: { startup: StartupType }) {
     } = startup;
 
     return (
-        <Card className="w-full p-4 shadow-md hover:shadow-lg transition-shadow duration-300">
+        <Card className="w-full h-full p-4 shadow-md hover:shadow-lg transition-shadow duration-300">
             <CardHeader>
                 <div className="flex items-center justify-between">
                     <div className="flex gap-2 justify-start items-center">
-                        <div className="flex justify-center w-12 h-12 rounded-full border border-gray-200 shadow-sm overflow-hidden relative">
+                        <div className="size-12 aspect-square rounded-full border border-gray-200 shadow-sm overflow-hidden relative">
                             <Image src={image} alt={`${name} logo`} fill objectFit="cover" />
                         </div>
                         <CardTitle className="text-xl font-semibold">{name}</CardTitle>
@@ -45,7 +45,7 @@ export function CardItem({ startup }: { startup: StartupType }) {
             <CardContent>
                 <div className="grid w-full items-center gap-4">
                     <div className="flex flex-col space-y-2">
-                        <Link href={website} className="text-blue-100 hover:underline">Website</Link>
+                        <Link href={website} className="text-slate-600 hover:underline">Website</Link>
                         <p><strong>Industries</strong></p>
                         <div className="flex flex-wrap gap-2">
                             {industries.map(i =>

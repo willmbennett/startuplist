@@ -36,16 +36,24 @@ export const SearchContainer = () => {
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
                 >
-                    <SearchComponent updateSearchResults={updateSearchResults} clearSearchResults={clearSearchResults} />
+                    <div className={cn("w-full z-30",
+                        !hasSearchResults ? "flex items-center justify-center" : "absolute top-0 backdrop-blur-md bg-white/10 py-2")}>
+                        <SearchComponent
+                            updateSearchResults={updateSearchResults}
+                            clearSearchResults={clearSearchResults}
+                        />
+                    </div>
                     {hasSearchResults && (
-                        <motion.div
-                            className="max-w-5xl"
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5 }}
-                        >
-                            <SearchResults searchResults={searchResults} />
-                        </motion.div>
+                        <div className="absolute top-0 w-wcreen h-screen overflow-y-scroll flex-none pt-14">
+                            <motion.div
+                                className="max-w-5xl"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5 }}
+                            >
+                                <SearchResults searchResults={searchResults} />
+                            </motion.div>
+                        </div>
                     )}
                 </motion.div>
             </motion.div>

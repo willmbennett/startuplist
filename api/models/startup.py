@@ -1,6 +1,6 @@
 from typing import Optional, List
 from bson import ObjectId
-from pydantic import BaseModel, ConfigDict, Field, HttpUrl
+from pydantic import BaseModel, ConfigDict, Field
 from pydantic.functional_validators import BeforeValidator
 from typing_extensions import Annotated
 
@@ -8,7 +8,7 @@ from typing_extensions import Annotated
 PyObjectId = Annotated[str, BeforeValidator(str)]
 
 class SocialsModel(BaseModel):
-    linkedin: Optional[HttpUrl] = None
+    linkedin: Optional[str] = None
     
 class LaunchModel(BaseModel):
     title: str = Field(...)
@@ -18,27 +18,27 @@ class LaunchModel(BaseModel):
 class FounderModel(BaseModel):
     name: str = Field(...)
     bio: str = Field(...)
-    image: HttpUrl = Field(...)
+    image: str = Field(...)
     company: str = Field(...)
     company_url: str = Field(...)
     socials: SocialsModel = Field(...)
 
 class StartupModel(BaseModel):
     id: Optional[PyObjectId] = Field(alias="_id", default=None)
-    scraped_url: HttpUrl = Field(...)
+    scraped_url: str = Field(...)
     embeddings_field: str = Field(...)
     name: str = Field(...)
     description: str = Field(...)
     details: str = Field(...)
-    image: HttpUrl = Field(...)
-    website: HttpUrl = Field(...)
+    image: str = Field(...)
+    website: str = Field(...)
     yc_batch: str = Field(...)
     status: str = Field(...)
     industries: List[str] = Field(...)
     location: Optional[str] = None
     founded: str = Field(...)
     team_size: str = Field(...)
-    group_partner: str = Field(...)
+    group_partner: Optional[str] = Field(...)
     founders: List[FounderModel] = Field(...)
     launches: List[LaunchModel] = Field(...)
     model_config = ConfigDict(
@@ -100,13 +100,13 @@ class StartupModel(BaseModel):
     )
 
 class UpdateStartupModel(BaseModel):
-    scraped_url: HttpUrl = Field(...)
+    scraped_url: str = Field(...)
     embeddings_field: str = Field(...)
     name: Optional[str] = None
     description: Optional[str] = None
     details: Optional[List[str]] = None
-    image: Optional[HttpUrl] = None
-    website: Optional[HttpUrl] = None
+    image: Optional[str] = None
+    website: Optional[str] = None
     yc_batch: Optional[str] = None
     status: Optional[str] = None
     industries: Optional[List[str]] = None
