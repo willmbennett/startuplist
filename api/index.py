@@ -1,7 +1,14 @@
 from fastapi import FastAPI
+import logging
+import uvicorn
+from api.routers import startups
 
 app = FastAPI()
 
-@app.get("/api/python")
-def hello_world():
-    return {"message": "Hello World"}
+logging.basicConfig(level=logging.INFO)
+#app.include_router(yc_scraping2.router)
+app.include_router(startups.router)
+
+# Run FastAPI in debug mode
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000, log_level="debug")

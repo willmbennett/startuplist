@@ -33,3 +33,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# python
+venv
+__pycache__
+package-lock.json
+api/routers/yc_scraping2.py
+api/utils/scraping2.py
+
+app/admin/*
