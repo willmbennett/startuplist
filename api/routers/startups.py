@@ -31,7 +31,6 @@ async def get_startups(request: Request, query: str = Query(..., description="Th
             "limit": 10
         }
     }
-
     # Construct the aggregation pipeline with the dynamic vectorSearch stage
     agg = [
         vectorSearchStage,
