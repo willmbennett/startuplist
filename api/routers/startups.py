@@ -38,7 +38,7 @@ async def get_startups(request: Request, query: str = Query(..., description="Th
     ]
 
     try:
-        startups = await request.app.startup_collection.aggregate(agg).to_list(30)
+        startups = await request.app.mongodb.get_collection("startups").aggregate(agg).to_list(30)
     except Exception as e:
         logger.error("Error retrieving startups: %s", e)
         raise HTTPException(status_code=500, detail="Error retrieving startups")
@@ -60,7 +60,7 @@ async def check_startup(request: Request, scraped_url: str = Query(..., descript
     print("About to check if this url exists")
     print(scraped_url)
     try:
-        found_startup = await request.app.startup_collection.find_one({"scraped_url": scraped_url})
+        found_startup = await request.app.mongodb.get_collection("startups").find_one({"scraped_url": scraped_url})
         return found_startup is not None
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -81,10 +81,10 @@ async def create_startup(request: Request, startup: StartupModel = Body(...)):
     print('About to save startup')
     print(startup)
     try:
-        new_startup = await request.app.startup_collection.insert_one(
+        new_startup = await request.app.mongodb.get_collection("startups").insert_one(
             startup.model_dump(by_alias=True, exclude=["id"])
         )
-        created_startup = await request.app.startup_collection.find_one(
+        created_startup = await request.app.mongodb.get_collection("startups").find_one(
             {"_id": new_startup.inserted_id}
         )
         return created_startup
@@ -110,7 +110,7 @@ async def update_startup(request: Request, id: str, startup: UpdateStartupModel 
 
     if len(startup) >= 1:
         try:
-            update_result = await request.app.startup_collection.find_one_and_update(
+            update_result = await request.app.mongodb.get_collection("startups").find_one_and_update(
                 {"_id": ObjectId(id)},
                 {"$set": startup},
                 return_document=ReturnDocument.AFTER,
@@ -124,7 +124,7 @@ async def update_startup(request: Request, id: str, startup: UpdateStartupModel 
 
     # The update is empty, but we should still return the matching document:
     try:
-        if (existing_startup := await request.app.startup_collection.find_one({"_id": ObjectId(id)})) is not None:
+        if (existing_startup := await request.app.mongodb.get_collection("startups").find_one({"_id": ObjectId(id)})) is not None:
             return existing_startup
         else:
             raise HTTPException(status_code=404, detail=f"Startup {id} not found")
