@@ -15,6 +15,7 @@ router = APIRouter(prefix='/api/startups')
 )
 async def get_startups(request: Request, query: str = Query(..., description="The text string to be embedded")):
     logger = logging.getLogger(__name__)
+    print(request.app.mongodb)
     
     try:
         embeddings = get_vector_embeddings_from_openai(query)
