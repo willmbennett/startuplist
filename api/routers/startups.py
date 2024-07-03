@@ -15,8 +15,6 @@ router = APIRouter(prefix='/api/startups')
 )
 async def get_startups(request: Request, query: str = Query(..., description="The text string to be embedded")):
     logger = logging.getLogger(__name__)
-    logger.info("App:")
-    logger.info(request.app)
     
     try:
         embeddings = get_vector_embeddings_from_openai(query)
@@ -40,8 +38,7 @@ async def get_startups(request: Request, query: str = Query(..., description="Th
     ]
 
     try:
-        logger.info("connection:")
-        logger.info(request.app.mongodb)
+        logger.info("connection:", request.app.mongodb)
         startups = await request.app.mongodb.get_collection("startups").aggregate(agg).to_list(30)
         logger.info("Startups retrieved: %d", len(startups))
     except Exception as e:
